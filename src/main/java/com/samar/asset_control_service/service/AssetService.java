@@ -76,6 +76,13 @@ public class AssetService {
         return updatedAsset;
     }
 
+    public List<AuditLog> getAuditLogs(UUID assetId) {
+	    return auditLogRepo.findByAssetId(assetId); 
+    }
+    public List<Asset> searchAssets(String keyword) {
+	    return assetRepo.findByAssetNameContainingIgnoreCase(keyword);
+    }
+
     private void logChange(UUID assetId, String logMessage, String action) {
         AuditLog log = new AuditLog();
         log.setLogDetails(logMessage);

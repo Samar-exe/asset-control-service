@@ -1,6 +1,7 @@
 package com.samar.asset_control_service.controller;
 
 import com.samar.asset_control_service.entities.Asset;
+import com.samar.asset_control_service.entities.AuditLog;
 import com.samar.asset_control_service.service.AssetService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -59,6 +60,18 @@ public class AssetController {
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/{id}/logs")
+    public ResponseEntity<List<AuditLog>> getAssetLogs(@PathVariable UUID id) {
+	    List<AuditLog> logs = assetService.getAuditLogs(id);
+	    return new ResponseEntity<>(logs, HttpStatus.OK);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Asset>> searchAssets(@RequestParam("keyword") String keyword) {
+	    List<Asset> results = assetService.searchAssets(keyword);
+	    return new ResponseEntity<>(results, HttpStatus.OK);
     }
 
 }
